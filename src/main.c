@@ -127,11 +127,34 @@ int main()
     char x[CHAR_HEIGHT][CHAR_WIDTH];
     create_x_char(x);
 
-    char (*board[14][15])[1][1] = {
-     {&o}
+    char (*board[14][15])[3][3] = {
+     {&x, &o, &x}, {&o, &x, &o}, {&x, &o, &x}
     };
 
-    putchar((*board[0][0])[0][7]);
+                    //putchar((*board[i][0])[h][k]);
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < CHAR_HEIGHT; j++) {
+            for (int k = 0; k < CHAR_WIDTH; k++) {
+                putchar((*board[i][0])[j][k]);
+            }
+            for (int k = 0; k < CHAR_WIDTH; k++) {
+                putchar((*board[i][1])[j][k]);
+            }
+            for (int k = 0; k < CHAR_WIDTH; k++) {
+                putchar((*board[i][2])[j][k]);
+            }
+            putchar('\n');
+        }
+        putchar('\n');
+    }
+
+    for (int i = 0; i < CHAR_HEIGHT; i++) {
+        for (int j = 0; j < CHAR_WIDTH; j++) {
+            putchar((*board[0][1])[i][j]);
+            //putchar(x[i][j]);
+        }
+        putchar('\n');
+    }
 
 
 //    for (int i = 0; i < CHAR_HEIGHT; i++) {
