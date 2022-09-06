@@ -6,7 +6,12 @@
 
 int CHAR_HEIGHT = 14;
 int CHAR_WIDTH = 15;
+int BOARD_SIZE = 3;
 #define DISPLAY_CHAR 'O'
+
+struct Board {
+   char *spots[3][3];
+};
 
 void create_x_char(char x[CHAR_HEIGHT][CHAR_WIDTH]) {
     for (int i = 0; i < CHAR_HEIGHT; i++) {
@@ -20,8 +25,11 @@ void create_x_char(char x[CHAR_HEIGHT][CHAR_WIDTH]) {
     }
 }
 
-void create_o_char(char o[CHAR_HEIGHT][CHAR_WIDTH]) {
-    // top char helpers
+bool is_put_top_chars(int index) {
+    return index == 0 || index == CHAR_HEIGHT - 1;
+}
+
+int calc_number_of_top_chars() {
     int is_odd_offset = CHAR_WIDTH % 2;
     int char_div_2 = CHAR_WIDTH / 2;
     int char_mod_five = CHAR_WIDTH % 5;
@@ -33,30 +41,37 @@ void create_o_char(char o[CHAR_HEIGHT][CHAR_WIDTH]) {
         number_of_top_chars++;
     }
 
+    return number_of_top_chars;
+}
+
+void create_o_char(char o[CHAR_HEIGHT][CHAR_WIDTH]) {
+    int number_of_top_chars = calc_number_of_top_chars();
+    int top_chars_offset = (CHAR_WIDTH - number_of_top_chars) / 2;
+
     // side char helpers
     int char_height_div_2 = CHAR_HEIGHT / 2;
     int is_height_odd_offset = CHAR_HEIGHT % 2;
     int number_of_size_chars = char_height_div_2 + (char_height_div_2 % 2) - (CHAR_HEIGHT % 2);
-    printf("%d\n", number_of_size_chars);
 
     int side_chars_created = 0;
 
     // diaganol chars
     int diaganol_char_height = CHAR_HEIGHT - number_of_size_chars - 2;
     int diaganol_char_width = CHAR_WIDTH - number_of_top_chars - 1;
-    int diaganol_char_offset = (CHAR_HEIGHT - number_of_size_chars - 2) / 2;
+    int diaganol_char_offset = diaganol_char_height / 2;
     int added_diaganol_zeros = 0;
-    printf("height: %d, width: %d, offset: %d\n", diaganol_char_height, diaganol_char_width, diaganol_char_offset);
 
     for (int i = 0; i < CHAR_HEIGHT; i++) {
         bool added_side_zero = false;
         bool added_diaganol_zero = false;
+        int top_chars_created = 0;
         for (int j = 0; j < CHAR_WIDTH; j++) {
             bool added_zero = false;
-            if (i == 0 || i == CHAR_HEIGHT - 1) {
-                if (j + 1 >= char_div_2 + 2 - number_of_top_chars + is_odd_offset && j - is_odd_offset <= char_div_2 + 2 - number_of_top_chars + is_odd_offset) {
+            if (is_put_top_chars(i)) {
+                if (j >= top_chars_offset && top_chars_created < number_of_top_chars) {
                     o[i][j] = DISPLAY_CHAR;
                     added_zero = true;
+                    top_chars_created++;
                 }
             } else if (i >= (CHAR_HEIGHT - number_of_size_chars) / 2 && side_chars_created < number_of_size_chars) {
                 if (j == 0 || j == CHAR_WIDTH - 1) {
@@ -89,37 +104,53 @@ void create_o_char(char o[CHAR_HEIGHT][CHAR_WIDTH]) {
     }
 }
 
+bool is_put_diaganol_chars(int index);
+bool is_put_side_chars(int index);
+
 int main() 
 {
-    for (int i = 10; i < 20; i++) {
-        CHAR_HEIGHT = i;
-        printf("--------------%d------------\n", i);
-        char tmp[CHAR_HEIGHT][CHAR_WIDTH];
-        create_o_char(tmp);
-        for (int j = 0; j < i; j++) {
-            for (int k = 0; k < CHAR_WIDTH; k++) {
-                putchar(tmp[j][k]);
-            }
-            putchar('\n');
-        }
-    }
+//    for (int i = 10; i < 20; i++) {
+//        CHAR_HEIGHT = i;
+//        printf("--------------%d------------\n", i);
+//        char tmp[CHAR_HEIGHT][CHAR_WIDTH];
+//        create_o_char(tmp);
+//        for (int j = 0; j < i; j++) {
+//            for (int k = 0; k < CHAR_WIDTH; k++) {
+//                putchar(tmp[j][k]);
+//            }
+//            putchar('\n');
+//        }
+//    }
     // print x
-//    char o[CHAR_HEIGHT][CHAR_WIDTH];
-//    create_o_char(o);
-//    char x[CHAR_HEIGHT][CHAR_WIDTH];
-//    create_x_char(x);
+    char o[CHAR_HEIGHT][CHAR_WIDTH];
+    create_o_char(o);
+    char x[CHAR_HEIGHT][CHAR_WIDTH];
+    create_x_char(x);
+
+    char (*board[14][15])[1][1] = {
+     {&o}
+    };
+
+    putchar((*board[0][0])[0][7]);
+
+
 //    for (int i = 0; i < CHAR_HEIGHT; i++) {
+//        for (int j = 0; j < CHAR_WIDTH; j++) {
+//
+//            char * t = board.spots[0][0];
+//            t[0];
+//        }
+//        printf(" | ");
+//        for (int j = 0; j < CHAR_WIDTH; j++) {
+//            putchar(o[i][j]);
+//        }
+//        printf(" | ");
 //        for (int j = 0; j < CHAR_WIDTH; j++) {
 //            putchar(o[i][j]);
 //        }
 //        putchar('\n');
 //    }
-//    for (int i = 0; i < CHAR_HEIGHT; i++) {
-//        for (int j = 0; j < CHAR_WIDTH; j++) {
-//            putchar(x[i][j]);
-//        }
-//        putchar('\n');
-//    }
+
 
     return 0;
 }
@@ -182,3 +213,7 @@ int main()
 //        }
 //        putchar('\n');
 //    }
+//                if (j + 1 >= char_div_2 + 2 - number_of_top_chars + is_odd_offset && j - is_odd_offset <= char_div_2 + 2 - number_of_top_chars + is_odd_offset) {
+//                    o[i][j] = DISPLAY_CHAR;
+//                    added_zero = true;
+//                }
