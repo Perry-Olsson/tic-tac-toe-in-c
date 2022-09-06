@@ -44,7 +44,7 @@ void create_o_char(char o[CHAR_HEIGHT][CHAR_WIDTH]) {
     // diaganol chars
     int diaganol_char_height = CHAR_HEIGHT - number_of_size_chars - 2;
     int diaganol_char_width = CHAR_WIDTH - number_of_top_chars - 1;
-    int diaganol_char_offset = diaganol_char_width;
+    int diaganol_char_offset = (CHAR_HEIGHT - number_of_size_chars - 2) / 2;
     int added_diaganol_zeros = 0;
     printf("height: %d, width: %d, offset: %d\n", diaganol_char_height, diaganol_char_width, diaganol_char_offset);
 
@@ -81,9 +81,9 @@ void create_o_char(char o[CHAR_HEIGHT][CHAR_WIDTH]) {
         }
         if (added_diaganol_zero == true && added_diaganol_zeros != diaganol_char_height) {
             if (i < char_height_div_2) {
-                diaganol_char_offset++;
-            } else {
                 diaganol_char_offset--;
+            } else {
+                diaganol_char_offset++;
             }
         }
     }
