@@ -109,25 +109,12 @@ bool is_put_side_chars(int index);
 
 int main() 
 {
-//    for (int i = 10; i < 20; i++) {
-//        CHAR_HEIGHT = i;
-//        printf("--------------%d------------\n", i);
-//        char tmp[CHAR_HEIGHT][CHAR_WIDTH];
-//        create_o_char(tmp);
-//        for (int j = 0; j < i; j++) {
-//            for (int k = 0; k < CHAR_WIDTH; k++) {
-//                putchar(tmp[j][k]);
-//            }
-//            putchar('\n');
-//        }
-//    }
-    // print x
     char o[CHAR_HEIGHT][CHAR_WIDTH];
     create_o_char(o);
     char x[CHAR_HEIGHT][CHAR_WIDTH];
     create_x_char(x);
 
-    char (*board[14][15])[3][3] = {
+    char (*board[3][3])[14][15] = {
      {&x, &o, &x}, {&o, &x, &o}, {&x, &o, &x}
     };
 
@@ -137,106 +124,24 @@ int main()
             for (int k = 0; k < CHAR_WIDTH; k++) {
                 putchar((*board[i][0])[j][k]);
             }
+            printf("  |  ");
             for (int k = 0; k < CHAR_WIDTH; k++) {
                 putchar((*board[i][1])[j][k]);
             }
+            printf("  |  ");
             for (int k = 0; k < CHAR_WIDTH; k++) {
                 putchar((*board[i][2])[j][k]);
             }
             putchar('\n');
         }
-        putchar('\n');
-    }
-
-    for (int i = 0; i < CHAR_HEIGHT; i++) {
-        for (int j = 0; j < CHAR_WIDTH; j++) {
-            putchar((*board[0][1])[i][j]);
-            //putchar(x[i][j]);
+        if (i != 2) {
+            for (int l = 0; l < CHAR_WIDTH * 3 + 10; l++) {
+                putchar('_');
+            }
         }
         putchar('\n');
+        putchar('\n');
     }
-
-
-//    for (int i = 0; i < CHAR_HEIGHT; i++) {
-//        for (int j = 0; j < CHAR_WIDTH; j++) {
-//
-//            char * t = board.spots[0][0];
-//            t[0];
-//        }
-//        printf(" | ");
-//        for (int j = 0; j < CHAR_WIDTH; j++) {
-//            putchar(o[i][j]);
-//        }
-//        printf(" | ");
-//        for (int j = 0; j < CHAR_WIDTH; j++) {
-//            putchar(o[i][j]);
-//        }
-//        putchar('\n');
-//    }
-
 
     return 0;
 }
-
-
-/* O     O       OO
- *            O    O
- *                 O
- *  O   O    O        O
- *   O O     O        O
- *    O      O        O   
- *   O O     O        O
-    O   O     O      O
-   O     O       OO
- */
-//    char o[CHAR_HEIGHT][CHAR_WIDTH] = {
-//       {' ',' ', ' ', ' ', 'O', 'O', ' ', ' ', ' ', ' '},
-//       {' ',' ', 'O', ' ', ' ', ' ', ' ', 'O', ' ', ' '},
-//       {' ','O', ' ', ' ', ' ', ' ', ' ', ' ', 'O', ' '},
-//       {' ','O', ' ', ' ', ' ', ' ', ' ', ' ', 'O', ' '},
-//       {' ','O', ' ', ' ', ' ', ' ', ' ', ' ', 'O', ' '},
-//       {' ','O', ' ', ' ', ' ', ' ', ' ', ' ', 'O', ' '},
-//       {' ','O', ' ', ' ', ' ', ' ', ' ', ' ', 'O', ' '},
-//       {' ','O', ' ', ' ', ' ', ' ', ' ', ' ', 'O', ' '},
-//       {' ','O', ' ', ' ', ' ', ' ', ' ', ' ', 'O', ' '},
-//       {' ','O', ' ', ' ', ' ', ' ', ' ', ' ', 'O', ' '},
-//       {' ','O', ' ', ' ', ' ', ' ', ' ', ' ', 'O', ' '},
-//       {' ','O', ' ', ' ', ' ', ' ', ' ', ' ', 'O', ' '},
-//       {' ','O', ' ', ' ', ' ', ' ', ' ', ' ', 'O', ' '},
-//       {' ',' ', 'O', ' ', ' ', ' ', ' ', 'O', ' ', ' '},
-//       {' ',' ', ' ', ' ', 'O', 'O', ' ', ' ', ' ', ' '},
-//    };
-
-//    for (int i = 0; i < CHAR_HEIGHT; i++) {
-//        for (int j = 0; j < CHAR_WIDTH; j++) {
-//            putchar(x[i][j]);
-//        }
-//        putchar('\n');
-//    }
-//    for (int i = 0; i < CHAR_HEIGHT; i++) {
-//        for (int j = 0; j < CHAR_WIDTH; j++) {
-//            putchar(o[i][j]);
-//        }
-//        putchar('\n');
-//    }
-//    #define ROW_SIZE 5
-//    #define COL_SIZE 5
-//    char *test = '―';
-//    char board[ROW_SIZE][COL_SIZE] = {
-//        {' ', '|', ' ', '|', ' '},
-//        {'_', '_', '_', '_', '_'},
-//        {' ', '|', ' ', '|', ' '},
-//        {'_', '_', '_', '_', '_'},
-//        {' ', '|', ' ', '|', ' '}
-//    };
-//    
-//    for (int i = 0; i < ROW_SIZE; i++) {
-//        for (int j = 0; j < COL_SIZE; j++) {
-//            putchar(board[i][j]);
-//        }
-//        putchar('\n');
-//    }
-//                if (j + 1 >= char_div_2 + 2 - number_of_top_chars + is_odd_offset && j - is_odd_offset <= char_div_2 + 2 - number_of_top_chars + is_odd_offset) {
-//                    o[i][j] = DISPLAY_CHAR;
-//                    added_zero = true;
-//                }
