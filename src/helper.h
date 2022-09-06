@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void print_text()
+void println(char *text)
 {
-    printf("hello\n");
+    printf("%s\n", text);
 }
