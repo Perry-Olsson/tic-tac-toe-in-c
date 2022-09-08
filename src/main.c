@@ -16,6 +16,14 @@ struct Board {
    char *spots[3][3];
 };
 
+void create_blank_char(char b[CHAR_HEIGHT][CHAR_WIDTH]) {
+    for (int i = 0; i < CHAR_HEIGHT; i++) {
+        for (int j = 0; j < CHAR_WIDTH; j++) {
+            b[i][j] = ' ';
+        }
+    }
+}
+
 void create_x_char(char x[CHAR_HEIGHT][CHAR_WIDTH]) {
     for (int i = 0; i < CHAR_HEIGHT; i++) {
         for (int j = 0; j < CHAR_WIDTH; j++) {
@@ -155,9 +163,11 @@ int main()
     create_o_char(o);
     char x[CHAR_HEIGHT][CHAR_WIDTH];
     create_x_char(x);
+    char blank[CHAR_HEIGHT][CHAR_WIDTH];
+    create_blank_char(blank);
 
     char (*board[3][3])[14][15] = {
-     {&x, &x, &x}, {&x, &x, &x}, {&x, &x, &x}
+     {&blank, &blank, &blank}, {&blank, &blank, &blank}, {&blank, &blank, &blank}
     };
 
     print_board(board);
