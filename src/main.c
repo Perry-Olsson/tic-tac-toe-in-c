@@ -1,13 +1,16 @@
 #include <stdio.h>
-#include <X11/Xlib.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <time.h>
 #include "helper.h"
+
+#define DISPLAY_CHAR 'O'
+#define clear() printf("\033[H\033[J")
+#define gotoxy(x,y) printf("\033[%d;%dH", (y), (x))
 
 int CHAR_HEIGHT = 14;
 int CHAR_WIDTH = 15;
 int BOARD_SIZE = 3;
-#define DISPLAY_CHAR 'O'
 
 struct Board {
    char *spots[3][3];
@@ -107,18 +110,9 @@ void create_o_char(char o[CHAR_HEIGHT][CHAR_WIDTH]) {
 bool is_put_diaganol_chars(int index);
 bool is_put_side_chars(int index);
 
-int main() 
-{
-    char o[CHAR_HEIGHT][CHAR_WIDTH];
-    create_o_char(o);
-    char x[CHAR_HEIGHT][CHAR_WIDTH];
-    create_x_char(x);
-
-    char (*board[3][3])[14][15] = {
-     {&x, &o, &x}, {&o, &x, &o}, {&x, &o, &x}
-    };
-
-                    //putchar((*board[i][0])[h][k]);
+void print_board(char (*board[3][3])[14][15]) {
+    clear();
+    printf("------------------------------------------------------------------------------------\n");
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < CHAR_HEIGHT; j++) {
             for (int k = 0; k < CHAR_WIDTH; k++) {
@@ -139,8 +133,41 @@ int main()
                 putchar('_');
             }
         }
-        putchar('\n');
-        putchar('\n');
+        if (i != 2) {
+            putchar('\n');
+            putchar('\n');
+        }
+    }
+    printf("------------------------------------------------------------------------------------\n");
+}
+
+void delay(long milliseconds) {
+    milliseconds = milliseconds * 1000;
+    clock_t start_time = clock();
+
+    while (clock() < start_time + milliseconds)
+        ;
+}
+
+int main() 
+{
+    char o[CHAR_HEIGHT][CHAR_WIDTH];
+    create_o_char(o);
+    char x[CHAR_HEIGHT][CHAR_WIDTH];
+    create_x_char(x);
+
+    char (*board[3][3])[14][15] = {
+     {&x, &x, &x}, {&x, &x, &x}, {&x, &x, &x}
+    };
+
+    print_board(board);
+    delay(1000);
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            board[i][j] = &o;
+            print_board(board);
+            delay(1000);
+        }
     }
 
     return 0;
